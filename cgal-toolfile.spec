@@ -16,7 +16,7 @@ cat << \EOF_TOOLFILE >%{i}/etc/scram.d/cgal.xml
   <lib name="CGAL"/>
   <client>
     <environment name="CGAL_BASE" default="@TOOL_ROOT@"/>
-    <environment name="LIBDIR" default="$CGAL_BASE/lib"/>
+    <environment name="LIBDIR" default="$CGAL_BASE/lib64"/>
     <environment name="INCLUDE" default="$CGAL_BASE/include"/>
   </client>
   <runtime name="ROOT_INCLUDE_PATH" value="$INCLUDE" type="path"/>
