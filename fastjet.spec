@@ -5,7 +5,7 @@
 Source: git+https://github.com/%{github_user}/fastjet.git?obj=%{branch}/%{tag}&export=%{n}-%{realversion}&output=/%{n}-%{realversion}.tgz
 Patch0: fastjet-3.1.0-cgal-lib64
 
-Requires: cgal
+Requires: boost cgal
 
 %prep
 %setup -n %{n}-%{realversion}
@@ -28,7 +28,7 @@ case %{cmsplatf} in
     *_amd64_*) CXXFLAGS="${CXXFLAGS} -msse3" ;;
 esac
 
-./configure \
+env CPPFLAGS="-I${BOOST_ROOT}/include" ./configure \
   --enable-shared \
   --enable-atlascone \
   --enable-cmsiterativecone \
