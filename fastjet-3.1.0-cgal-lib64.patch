@@ -1,0 +1,20 @@
+diff --git a/configure b/configure
+index 5fecace..f3c5ab6 100755
+--- a/configure
++++ b/configure
+@@ -6393,13 +6393,13 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
+                     if test \! -z "$with_cgaldir"; then
+         { $as_echo "$as_me:$LINENO: checking CGAL in ${with_cgaldir}" >&5
+ $as_echo_n "checking CGAL in ${with_cgaldir}... " >&6; }
+-	LDFLAGS="${LDFLAGS} -L${with_cgaldir}/lib -Wl,-rpath,${with_cgaldir}/lib"
++	LDFLAGS="${LDFLAGS} -L${with_cgaldir}/lib64 -Wl,-rpath,${with_cgaldir}/lib64"
+ 	CXXFLAGS="${CXXFLAGS} -I${with_cgaldir}/include $ADDITIONAL_CGAL_FLAGS"
+ 	CPPFLAGS="${CPPFLAGS} -I${with_cgaldir}/include $ADDITIONAL_CGAL_FLAGS"
+ 
+ 	CGAL_CPPFLAGS="-I${with_cgaldir}/include"
+ 	CGAL_CXXFLAGS="-I${with_cgaldir}/include"
+-	CGAL_LIBS="-L${with_cgaldir}/lib -Wl,-rpath,${with_cgaldir}/lib"
++	CGAL_LIBS="-L${with_cgaldir}/lib64 -Wl,-rpath,${with_cgaldir}/lib64"
+     fi
+ 
+     CXXFLAGS=${CXXFLAGS}" $ADDITIONAL_CGAL_FLAGS"

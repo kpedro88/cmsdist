@@ -1,7 +1,7 @@
-### RPM external cgal 4.2
+### RPM external cgal 4.9
 
-Source: https://gforge.inria.fr/frs/download.php/32360/%{n}-%{realversion}.tar.bz2
-Patch0: cgal-4.2-cmake-string-replace
+Source: https://github.com/CGAL/cgal/archive/releases/CGAL-4.9.tar.gz
+#Patch0: cgal-4.2-cmake-string-replace
 
 BuildRequires: cmake
 Requires: gmp-static mpfr-static
@@ -19,8 +19,8 @@ Requires: boost zlib
 %define drop_files %{i}/{share,bin} %{i}/lib/CGAL
 
 %prep
-%setup -n CGAL-%{realversion}
-%patch0 -p1
+%setup -n cgal-releases-CGAL-%{realversion}
+#patch0 -p1
 
 %build
 
@@ -34,6 +34,7 @@ cmake . \
   -DCMAKE_CXX_FLAGS:STRING="%{cms_cxxflags}" \
   -DCMAKE_INSTALL_PREFIX:PATH="%{i}" \
   -DCMAKE_SKIP_RPATH:BOOL=YES \
+  -DCMAKE_VERBOSE_MAKEFILE=TRUE \
   -DWITH_BLAS:BOOL=OFF \
   -DWITH_CGAL_Core:BOOL=ON \
   -DWITH_CGAL_ImageIO:BOOL=ON \

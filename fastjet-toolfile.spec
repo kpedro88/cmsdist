@@ -22,6 +22,7 @@ cat << \EOF_TOOLFILE >%i/etc/scram.d/fastjet.xml
     </client>
     <runtime name="ROOT_INCLUDE_PATH" value="$INCLUDE" type="path"/>
     <use name="root_cxxdefaults"/>
+    <use name="cgal"/>
   </tool>
 EOF_TOOLFILE
 

@@ -3,9 +3,13 @@
 %define branch cms/v%{realversion}
 %define github_user cms-externals
 Source: git+https://github.com/%{github_user}/fastjet.git?obj=%{branch}/%{tag}&export=%{n}-%{realversion}&output=/%{n}-%{realversion}.tgz
+Patch0: fastjet-3.1.0-cgal-lib64
+
+Requires: cgal
 
 %prep
 %setup -n %{n}-%{realversion}
+%patch0 -p1
 
 # Update to detect aarch64 and ppc64le
 rm -f ./config.{sub,guess}
@@ -31,6 +35,8 @@ esac
   --enable-siscone \
   --prefix=%{i} \
   --enable-allcxxplugins \
+  --enable-cgal \
+  --with-cgaldir=${CGAL_ROOT} \
   CXXFLAGS="$CXXFLAGS"
 
 %build
