@@ -17,22 +17,26 @@
 
 Source: %{source0}
 Requires: zlib
-BuildRequires: autotools
+BuildRequires: cmake
 
 %prep
 %setup -n %{source_prefix}
 
 %build
-./autogen.sh
+cd cmake
+rm -rf build
+mkdir build
+cd build
+pwd
 
-./configure --prefix %{i} \
-    --disable-static \
-    --disable-dependency-tracking \
-    CXXFLAGS="-I${ZLIB_ROOT}/include" \
-    CFLAGS="-I${ZLIB_ROOT}/include" \
-    LDFLAGS="-L${ZLIB_ROOT}/lib"
+cmake ../ \
+  -DCMAKE_BUILD_TYPE=Release \
+  -DZLIB_ROOT=${ZLIB_ROOT} \
+  -DBUILD_SHARED_LIBS=ON \
+  -Dprotobuf_BUILD_TESTS=OFF \
+  -DCMAKE_INSTALL_PREFIX=%{i}
+
 make %{makeprocesses}
 
 %install
 make install
-rm -rf %{i}/lib/pkgconfig
