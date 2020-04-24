@@ -12,12 +12,18 @@ Requires: opencv protobuf grpc python py2-wheel py2-setuptools py2-grpcio-tools
 
 %build
 
-cd build
-cmake ../%{n}-%{realversion} \
+rm -rf ../build
+mkdir ../build
+cd ../build
+
+cmake ../%{n}-%{realversion}/build \
     -DCMAKE_INSTALL_PREFIX="%{i}" \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DTRTIS_ENABLE_GPU=OFF \
+    -DTRTIS_ENABLE_METRICS_GPU=OFF \
+    -DZLIB_ROOT=${ZLIB_ROOT} \
+    -DCMAKE_PREFIX_PATH="${ZLIB_ROOT}"
 make %{makeprocesses} trtis-clients
 
 %install
