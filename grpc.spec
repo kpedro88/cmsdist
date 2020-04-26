@@ -4,6 +4,7 @@ Source: git+https://github.com/grpc/grpc.git?obj=master/v%{realversion}&export=%
 
 BuildRequires: cmake ninja
 Requires: protobuf zlib libunwind
+%define keep_archives true
 
 %prep
 
