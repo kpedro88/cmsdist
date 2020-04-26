@@ -27,7 +27,7 @@ cmake ../%{n}-%{realversion}/build/trtis-clients \
     -DCMAKE_INSTALL_LIBDIR=lib \
     -DCMAKE_BUILD_TYPE=Release \
     -DTRTIS_ENABLE_GPU=OFF \
-    -DCURL_LIBRARY=${CURL_ROOT}/lib \
+    -DCURL_LIBRARY=${CURL_ROOT}/lib/libcurl.so \
     -DCURL_INCLUDE_DIR=${CURL_ROOT}/include \
     -DTRTIS_ENABLE_METRICS=OFF \
     -DTRTIS_ENABLE_HTTP_V2=OFF \

@@ -1,4 +1,4 @@
-### RPM external grpc 1.27.3
+### RPM external grpc 1.28.1
 
 Source: git+https://github.com/grpc/grpc.git?obj=master/v%{realversion}&export=%{n}-%{realversion}&submodules=1&output=/%{n}-%{realversion}.tgz
 
