@@ -1,5 +1,5 @@
 ### RPM external grpc-toolfile 1.0
-requires: grpc
+Requires: grpc
 
 %prep
 

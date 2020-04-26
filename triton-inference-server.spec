@@ -38,6 +38,6 @@ cmake ../%{n}-%{realversion}/build/trtis-clients \
 make %{makeprocesses}
 
 %install
-
+cd ../build
 make install
 

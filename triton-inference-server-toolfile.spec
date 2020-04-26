@@ -1,5 +1,5 @@
 ### RPM external triton-inference-server-toolfile 1.0
-requires: triton-inference-server
+Requires: triton-inference-server
 
 %prep
 
