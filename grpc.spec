@@ -2,7 +2,7 @@
 
 Source: git+https://github.com/grpc/grpc.git?obj=master/v%{realversion}&export=%{n}-%{realversion}&submodules=1&output=/%{n}-%{realversion}.tgz
 
-BuildRequires: cmake ninja
+BuildRequires: cmake ninja go
 Requires: protobuf zlib libunwind
 %define keep_archives true
 
