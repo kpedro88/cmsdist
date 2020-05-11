@@ -123,6 +123,8 @@ bazel $BAZEL_OPTS $BAZEL_EXTRA_OPTS //tensorflow:install_headers
 chmod -R a+rwX $PWD/bazel-bin/tensorflow/include
 for f in $(find tensorflow -name "*.proto")
 do
+    # keep proto files for tensorflow/serving
+    cp -p --parents $f $PWD/bazel-bin/tensorflow/include/
     protoc --cpp_out=$PWD/bazel-bin/tensorflow/include $f
 done
 %endif

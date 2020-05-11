@@ -9,9 +9,6 @@ Requires: protobuf grpc tensorflow eigen
 
 %setup -q -n %{n}-%{realversion}
 
-cd serving
-git clone --recursive https://github.com/tensorflow/tensorflow.git -b v2.1.0
-
 %build
 
 rm -rf ../build
