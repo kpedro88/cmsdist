@@ -20,6 +20,7 @@ MAX_JOBS=%compiling_processes \
 USE_CUDA=0 \
 USE_CUDNN=0 \
 USE_FBGEMM=0 \
+USE_NUMA=0 \
 BUILD_TEST=0 \
 USE_MKLDNN=0 \
 USE_DISTRIBUTED=0 \
@@ -33,9 +34,14 @@ USE_TBB=1 \
 ATEN_THREADING=TBB \
 BUILD_CUSTOM_PROTOBUF=OFF \
 BUILD_CAFFE2_OPS=0 \
-CMAKE_PREFIX_PATH="${ZLIB_ROOT}${OPENSSLROOT}" \
+pybind11_INCLUDE_DIR=${PY2_PYBIND11_ROOT}/include/python2.7 \
+CMAKE_PREFIX_PATH="${ZLIB_ROOT};${PY2_PYBIND11_ROOT}${OPENSSLROOT}" \
 python setup.py install
 
 %install
 
-# try to figure out where it installs
+# installs in "torch" folder by default
+for product in lib64 lib bin include share version.py; do
+  mv ../%{n}-%{realversion}/torch/$product %{i}/
+done
+
