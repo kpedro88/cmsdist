@@ -1,4 +1,4 @@
-### RPM external triton-inference-server 2.2.0
+### RPM external triton-inference-server 2.3.0
 %define branch master
 %define github_user triton-inference-server
 
@@ -12,11 +12,6 @@ Requires: openssl opencv protobuf grpc curl python py2-wheel py2-setuptools py2-
 
 %build
 
-# remove config required in cmake (a future triton version will support cmake flag TRITON_CURL_WITHOUT_CONFIG for this)
-sed -i 's/find_package(CURL CONFIG REQUIRED)/find_package(CURL REQUIRED)/' ../%{n}-%{realversion}/src/clients/c++/library/CMakeLists.txt
-# pick up rapidjson headers
-#sed -i '/  # libhttpclient_static.a/i \ \ target_include_directories(http-client-library PUBLIC ${RapidJSON_INCLUDE_DIRS})\n' ../%{n}-%{realversion}/src/clients/c++/library/CMakeLists.txt
-sed -i '/  # libhttpclient_static.a/i \ \ target_link_libraries(http-client-library rapidjson)\n' ../%{n}-%{realversion}/src/clients/c++/library/CMakeLists.txt
 #change flag due to bug in gcc10 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=95148
 if [[ `gcc --version | head -1 | cut -d' ' -f3 | cut -d. -f1,2,3 | tr -d .` -gt 1000 ]] ; then 
     sed -i -e "s|Werror|Wtype-limits|g" ../%{n}-%{realversion}/build/client/CMakeLists.txt
@@ -32,6 +27,7 @@ cmake ../%{n}-%{realversion}/build/client \
     -DCMAKE_BUILD_TYPE=Release \
     -DTRITON_ENABLE_GPU=OFF \
     -DTRITON_CLIENT_SKIP_EXAMPLES=ON \
+    -DTRITON_CURL_WITHOUT_CONFIG=ON \
     -DRapidJSON_DIR=${RAPIDJSON_ROOT}/lib/cmake/RapidJSON \
     -DCURL_LIBRARY=${CURL_ROOT}/lib/libcurl.so \
     -DCURL_INCLUDE_DIR=${CURL_ROOT}/include \
