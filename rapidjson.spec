@@ -1,8 +1,9 @@
-### RPM external rapidjson 1.1.0
+### RPM external rapidjson 1.1.1
 %define branch master
 %define github_user Tencent
 
-Source: git+https://github.com/%{github_user}/rapidjson.git?obj=%{branch}/v%{realversion}&export=%{n}-%{realversion}&output=/%{n}-%{realversion}.tgz
+# rapidjson has not tagged a release since 2016, so just use latest commit hash
+Source: git+https://github.com/%{github_user}/rapidjson.git?obj=%{branch}/ce81bc9edfe773667a7a4454ba81dac72ed4364c&export=%{n}-%{realversion}&output=/%{n}-%{realversion}.tgz
 BuildRequires: cmake
 
 %prep
@@ -32,4 +33,3 @@ make %{makeprocesses}
 cd ../build
 
 make install
-
