@@ -4,7 +4,7 @@
 
 Source: git+https://github.com/%{github_user}/server.git?obj=%{branch}/v%{realversion}&export=%{n}-%{realversion}&output=/%{n}-%{realversion}.tgz
 BuildRequires: cmake
-Requires: openssl opencv protobuf grpc curl python py2-wheel py2-setuptools py2-grpcio-tools rapidjson
+Requires: openssl opencv protobuf grpc curl python py2-wheel py2-setuptools py2-grpcio-tools python3
 
 %prep
 
@@ -12,6 +12,11 @@ Requires: openssl opencv protobuf grpc curl python py2-wheel py2-setuptools py2-
 
 %build
 
+# remove python client because it requires perf_client which is disabled when examples skipped
+# if this were enabled, `export PYVER=3` would be needed for build_wheel.sh
+sed -i 's~add_subdirectory(../../src/clients/python src/clients/python)~~' ../%{n}-%{realversion}/build/client/CMakeLists.txt
+# remove attempts to install external libs
+sed -i '\~../../../../..~d' ../%{n}-%{realversion}/src/clients/c++/library/CMakeLists.txt
 #change flag due to bug in gcc10 https://gcc.gnu.org/bugzilla/show_bug.cgi?id=95148
 if [[ `gcc --version | head -1 | cut -d' ' -f3 | cut -d. -f1,2,3 | tr -d .` -gt 1000 ]] ; then 
     sed -i -e "s|Werror|Wtype-limits|g" ../%{n}-%{realversion}/build/client/CMakeLists.txt
@@ -28,10 +33,9 @@ cmake ../%{n}-%{realversion}/build/client \
     -DTRITON_ENABLE_GPU=OFF \
     -DTRITON_CLIENT_SKIP_EXAMPLES=ON \
     -DTRITON_CURL_WITHOUT_CONFIG=ON \
-    -DRapidJSON_DIR=${RAPIDJSON_ROOT}/lib/cmake/RapidJSON \
     -DCURL_LIBRARY=${CURL_ROOT}/lib/libcurl.so \
     -DCURL_INCLUDE_DIR=${CURL_ROOT}/include \
-    -DTRITON_ENABLE_HTTP=ON \
+    -DTRITON_ENABLE_HTTP=OFF \
     -DTRITON_ENABLE_GRPC=ON \
     -DTRITON_VERSION=%{realversion} \
     -DZLIB_ROOT=${ZLIB_ROOT} \
@@ -39,7 +43,7 @@ cmake ../%{n}-%{realversion}/build/client \
     -DCMAKE_CXX_FLAGS="-Wno-error" \
     -DCMAKE_PREFIX_PATH="${ZLIB_ROOT}"
 
-make VERBOSE=1 %{makeprocesses}
+make %{makeprocesses}
 
 %install
 cd ../build
